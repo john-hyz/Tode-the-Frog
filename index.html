@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/tode.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tode the Frog</title>
+  </head>
+  <body>
+    <div class="large-stars" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="score">0</div>
+    <div id="instructions" class="instructions-panel instructions">
+      <div class="instructions-header">
+        <span class="instructions-title">Instructions</span>
+        <div class="instructions-actions">
+          <button id="instructions-toggle" class="instructions-toggle hide-btn" type="button" aria-label="Toggle instructions">Hide</button>
+        </div>
+      </div>
+      <div id="instructions-content" class="instructions-content">
+        <ul class="instructions-list">
+          <li><span class="key">K key</span> - <span class="desc">Attack</span></li>
+          <li><span class="key">Arrow keys / WASD</span> - <span class="desc">Move</span></li>
+          <li><span class="key">P key</span> - <span class="desc">Pause</span></li>
+          <li><span class="key">M key</span> - <span class="desc">Toggle music</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="attack-cooldown">
+      <span class="attack-cooldown-label">Attack</span>
+      <div class="attack-cooldown-track">
+        <div class="attack-cooldown-fill"></div>
+      </div>
+    </div>
+    <canvas class="game"></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

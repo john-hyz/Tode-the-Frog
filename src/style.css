@@ -1,0 +1,360 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #0b1f3a;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 8% 18%, rgba(255, 255, 255, 0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 18% 72%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 31% 34%, rgba(255, 255, 255, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 82%, rgba(255, 255, 255, 0.55) 0 1px, transparent 2px),
+    radial-gradient(circle at 57% 16%, rgba(255, 255, 255, 0.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 68% 58%, rgba(255, 255, 255, 0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 79% 27%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 91% 76%, rgba(255, 255, 255, 0.8) 0 1px, transparent 2px);
+  animation: star-twinkle 1.8s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.large-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.large-stars span {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 5px 2px rgba(180, 220, 255, 0.9);
+  will-change: opacity, transform, box-shadow;
+}
+
+.large-stars span:nth-child(1) { left: 14%; top: 42%; animation-delay: -0.4s; }
+.large-stars span:nth-child(2) { left: 26%; top: 12%; animation-delay: -1.7s; }
+.large-stars span:nth-child(3) { left: 47%; top: 62%; animation-delay: -2.3s; }
+.large-stars span:nth-child(4) { left: 63%; top: 34%; animation-delay: -0.9s; }
+.large-stars span:nth-child(5) { left: 74%; top: 88%; animation-delay: -2.6s; }
+.large-stars span:nth-child(6) { left: 88%; top: 48%; animation-delay: -1.3s; }
+
+canvas.game {
+  position: fixed;
+  inset: 0;
+  display: block;
+  z-index: 1;
+}
+
+@keyframes star-twinkle {
+  0% {
+    opacity: 0.45;
+  }
+
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.score {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 8px 24px;
+  border-radius: 8px;
+  z-index: 10;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.05em;
+  min-width: 40px;
+  text-align: center;
+}
+
+.score-label {
+  color: #fff;
+}
+
+.score-value {
+  color: #ffd700;
+}
+
+.attack-cooldown {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: min(220px, 35vw);
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.attack-cooldown-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #2196f3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.attack-cooldown-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.attack-cooldown-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #ffd700;
+  transition: width 80ms linear;
+}
+
+.attack-cooldown.ready .attack-cooldown-fill {
+  background: #4caf50;
+}
+
+.instructions-panel,
+.instructions {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-family: sans-serif;
+  z-index: 10;
+  pointer-events: auto;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  transition: max-height 0.2s ease, opacity 0.2s ease;
+}
+
+.instructions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.instructions-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.instructions-panel .instructions-title,
+.instructions .instructions-title {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #2196f3;
+  margin: 0;
+}
+
+.instructions-toggle,
+.pause-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  pointer-events: auto;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.instructions-toggle:hover,
+.pause-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.instructions-toggle:active,
+.pause-btn:active {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.pause-btn.paused {
+  background: rgba(255, 193, 7, 0.3);
+  border-color: rgba(255, 193, 7, 0.6);
+  color: #ffd700;
+}
+
+.instructions-content {
+  margin-top: 8px;
+}
+
+.instructions-panel.collapsed .instructions-content,
+.instructions.collapsed .instructions-content {
+  display: none;
+}
+
+.instructions-panel ul,
+.instructions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.instructions-panel li,
+.instructions li {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.instructions-panel li:last-child,
+.instructions li:last-child {
+  margin-bottom: 0;
+}
+
+.instructions-panel .key,
+.instructions .key {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.instructions-panel .desc,
+.instructions .desc {
+  color: #ddd;
+}
+
+.game-over {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.72);
+  font-family: sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 20;
+}
+
+.game-paused {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.72);
+  font-family: sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 20;
+}
+
+.game-paused.visible {
+  opacity: 1;
+}
+
+.game-paused strong {
+  font-size: clamp(42px, 8vw, 84px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-paused span {
+  font-size: clamp(16px, 2vw, 24px);
+  color: #2196f3;
+}
+
+.game-start {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.72);
+  font-family: sans-serif;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 20;
+}
+
+.game-start:not(.visible) {
+  opacity: 0;
+}
+
+.game-start strong {
+  font-size: clamp(42px, 8vw, 84px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-start span {
+  font-size: clamp(16px, 2vw, 24px);
+  color: #2196f3;
+}
+
+.game-over.visible {
+  opacity: 1;
+}
+
+.game-over strong {
+  font-size: clamp(42px, 8vw, 84px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-over span {
+  font-size: clamp(16px, 2vw, 24px);
+  color: #2196f3;
+}
